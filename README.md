@@ -1,0 +1,1 @@
+# squireMechCardSystem-api
