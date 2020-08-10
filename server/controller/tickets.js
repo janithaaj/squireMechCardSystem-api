@@ -80,8 +80,9 @@ exports.ticketEdit = function (req, res, next) {
 
 // Create ticket Export
 exports.ticketCreate = function (req, res, next) {
-    console.log(req.body, 'req')
+    // console.log(req, 'req')
     var input = JSON.parse(JSON.stringify(req.body));
+    // console.log(input, 'input')
     var data = {
 
         title: input.title,
@@ -106,12 +107,18 @@ exports.ticketCreate = function (req, res, next) {
         public: input.public,
         close_timestamp: input.close_timestamp,
     };
-    console.log(data, 'data')
+    // console.log(data, 'data')
     const sql = "INSERT INTO tickets (tickets.title, tickets.body, tickets.userid, tickets.assignedid, tickets.timestamp, tickets.categoryid, tickets.status, tickets.priority, tickets.last_reply_timestamp, tickets.last_reply_userid, tickets.notes, tickets.message_id_hash, tickets.guest_email, tickets.guest_password, tickets.last_reply_string, tickets.rating, tickets.ticket_date, tickets.close_ticket_date, tickets.archived, tickets.public, tickets.close_timestamp) VALUES ('" + data.title + "','" + data.body + "','" + data.userid + "','" + data.assignedid + "','" + data.timestamp + "','" + data.categoryid + "','" + data.status + "','" + data.priority + "','" + data.last_reply_timestamp + "','" + data.last_reply_userid + "','" + data.notes + "','" + data.message_id_hash + "','" + data.guest_email + "','" + data.guest_password + "','" + data.last_reply_string + "','" + data.rating + "','" + data.ticket_date + "','" + data.close_ticket_date + "','" + data.archived + "','" + data.public + "','" + data.close_timestamp + "')";
     pool.query(sql, (err, rows, fields) => {
+        console.log(res.req.body, 'res')
         if (!err)
-            res.send(fields);
+            console.log(res.req.body, 'res')
+        if (res.status(200)) {
+            res.send(res.req.body);
+        }
+
         else
-            console.log(err);
+            console.log(err.code);
+        res.send(err.code);
     })
 };
